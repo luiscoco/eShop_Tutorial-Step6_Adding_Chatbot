@@ -91,6 +91,44 @@ If chat is not present or is false, the property is false
 
 ## 2. Load Nuget packages for AI in WebApp project
 
+We have to load the Microsoft.Extensions.AI Nuget packages
+
+Both packages aim to streamline the development of **AI-integrated applications** using the .NET ecosystem
+
+![image](https://github.com/user-attachments/assets/cda2e1e2-c79e-4ca3-9fe3-9dac0cd2e44b)
+
+**Microsoft.Extensions.AI**:
+
+**Purpose**:
+
+This package provides foundational support for integrating AI-based services and applications in .NET projects
+
+It is part of the Microsoft.Extensions family, designed to integrate seamlessly with ASP.NET Core and other .NET applications
+
+**Features**:
+
+Abstractions and utilities for working with AI models or services
+
+Dependency injection (DI) support to easily configure AI services in .NET projects
+
+Simplifies the integration of AI functionalities into your application using standardized patterns
+
+**Use Case**: If you are building an application that uses AI models (from any provider, potentially), this package helps establish the infrastructure to work with AI services efficiently
+
+**Microsoft.Extensions.AI.OpenAI**:
+
+**Purpose**: This package builds on Microsoft.Extensions.AI and provides specific integrations for OpenAI's APIs, making it easier to interact with OpenAI services like ChatGPT, Codex, or DALL-E directly within a .NET application
+
+**Features**:
+
+OpenAI-specific utilities and configuration options
+
+Simplifies making requests to OpenAI APIs (e.g., for text generation, image creation)
+
+Ensures compatibility with OpenAI's service models while leveraging .NET's dependency injection and configuration capabilities
+
+**Use Case**: Use this package when you need to integrate OpenAI’s capabilities into your .NET application, whether for chat, content generation, or other AI-driven functiona
+
 ## 3. We modify the ChatState.cs file
 
 ## 4. We modify the Chatbot.razor component
