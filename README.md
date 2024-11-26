@@ -2,7 +2,7 @@
 
 ## 1. We include the ShowChatbotButton razor component in the Mainlayout
 
-We can see in the Catalogue Web Page the Show ChatBot button
+We can see in the **Catalogue** Web Page the **Show ChatBot button**
 
 ![image](https://github.com/user-attachments/assets/5c2fc026-a3f8-4362-bdfb-698926e412bd)
 
