@@ -393,9 +393,7 @@ GetUserInfo: Gathers user-related details (e.g., name, email, address) from thei
 
 SearchCatalog: Searches the product catalog using the description provided by the user
 
-Commented-out tools:
-
-AddToCart and GetCartContents: Placeholder functions to manage the shopping cart
+Commented-out tools: AddToCart and GetCartContents: Placeholder functions to manage the shopping cart
 
 **Utility Functions**
 
