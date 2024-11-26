@@ -94,7 +94,7 @@ If chat is not present or is false, the property is false
 
 ## 2. Add the ChatBot button image in the wwwroot folder
 
-
+![image](https://github.com/user-attachments/assets/8231e342-2e2f-4bcc-bdf8-3498d67f45da)
 
 ## 3. Load Nuget packages for AI in WebApp project
 
