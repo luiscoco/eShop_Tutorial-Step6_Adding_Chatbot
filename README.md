@@ -2,7 +2,11 @@
 
 ## 1. We include the ShowChatbotButton razor component in the Mainlayout
 
-We have to include the **ShowChatbotButton.razor** component in the **Mainlayout.razor** component
+We can see in the Catalogue Web Page the Show ChatBot button
+
+![image](https://github.com/user-attachments/assets/5c2fc026-a3f8-4362-bdfb-698926e412bd)
+
+To include this button in our application we have to add the **ShowChatbotButton.razor** component into the **Mainlayout.razor** component
 
 ![image](https://github.com/user-attachments/assets/5cdbe554-b14e-45e6-855d-2d4abf08135f)
 
@@ -88,8 +92,11 @@ When the URL contains chat=true, the ShowChat property is automatically set to t
 
 If chat is not present or is false, the property is false
 
+## 2. Add the ChatBot button image in the wwwroot folder
 
-## 2. Load Nuget packages for AI in WebApp project
+
+
+## 3. Load Nuget packages for AI in WebApp project
 
 We have to load the Microsoft.Extensions.AI Nuget packages
 
@@ -129,13 +136,13 @@ Ensures compatibility with OpenAI's service models while leveraging .NET's depen
 
 **Use Case**: Use this package when you need to integrate OpenAI’s capabilities into your .NET application, whether for chat, content generation, or other AI-driven functiona
 
-## 3. We modify the ChatState.cs file
+## 4. We modify the ChatState.cs file
 
-## 4. We modify the Chatbot.razor component
+## 5. We modify the Chatbot.razor component
 
-## 5. We configure the eShop.AppHost middleware
+## 6. We configure the eShop.AppHost middleware
 
 
-## 6. We configure the AI connection string in the appsettings.json
+## 7. We configure the AI connection string in the appsettings.json
 
-## 7. 
+## 8. 
