@@ -9,7 +9,7 @@ namespace eShop.WebApp.Chatbot;
 public class ChatState
 {
     private readonly ICatalogService _catalogService;
-    private readonly IBasketState _basketState;
+    //private readonly IBasketState _basketState;
     private readonly ClaimsPrincipal _user;
     private readonly ILogger _logger;
     private readonly IProductImageUrlProvider _productImages;
@@ -18,14 +18,14 @@ public class ChatState
 
     public ChatState(
         ICatalogService catalogService,
-        IBasketState basketState,
+        //IBasketState basketState,
         ClaimsPrincipal user,
         IProductImageUrlProvider productImages,
         ILoggerFactory loggerFactory,
         IChatClient chatClient)
     {
         _catalogService = catalogService;
-        _basketState = basketState;
+        //_basketState = basketState;
         _user = user;
         _productImages = productImages;
         _logger = loggerFactory.CreateLogger(typeof(ChatState));
@@ -42,8 +42,8 @@ public class ChatState
             [
                 AIFunctionFactory.Create(GetUserInfo),
                 AIFunctionFactory.Create(SearchCatalog),
-                AIFunctionFactory.Create(AddToCart),
-                AIFunctionFactory.Create(GetCartContents),
+                //AIFunctionFactory.Create(AddToCart),
+                //AIFunctionFactory.Create(GetCartContents),
             ],
         };
 
@@ -133,38 +133,38 @@ public class ChatState
         }
     }
 
-    [Description("Adds a product to the user's shopping cart.")]
-    private async Task<string> AddToCart([Description("The id of the product to add to the shopping cart (basket)")] int itemId)
-    {
-        try
-        {
-            var item = await _catalogService.GetCatalogItem(itemId);
-            await _basketState.AddAsync(item!);
-            return "Item added to shopping cart.";
-        }
-        catch (Grpc.Core.RpcException e) when (e.StatusCode == Grpc.Core.StatusCode.Unauthenticated)
-        {
-            return "Unable to add an item to the cart. You must be logged in.";
-        }
-        catch (Exception e)
-        {
-            return Error(e, "Unable to add the item to the cart.");
-        }
-    }
+    //[Description("Adds a product to the user's shopping cart.")]
+    //private async Task<string> AddToCart([Description("The id of the product to add to the shopping cart (basket)")] int itemId)
+    //{
+    //    try
+    //    {
+    //        var item = await _catalogService.GetCatalogItem(itemId);
+    //        await _basketState.AddAsync(item!);
+    //        return "Item added to shopping cart.";
+    //    }
+    //    catch (Grpc.Core.RpcException e) when (e.StatusCode == Grpc.Core.StatusCode.Unauthenticated)
+    //    {
+    //        return "Unable to add an item to the cart. You must be logged in.";
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        return Error(e, "Unable to add the item to the cart.");
+    //    }
+    //}
 
-    [Description("Gets information about the contents of the user's shopping cart (basket)")]
-    private async Task<string> GetCartContents()
-    {
-        try
-        {
-            var basketItems = await _basketState.GetBasketItemsAsync();
-            return JsonSerializer.Serialize(basketItems);
-        }
-        catch (Exception e)
-        {
-            return Error(e, "Unable to get the cart's contents.");
-        }
-    }
+    //[Description("Gets information about the contents of the user's shopping cart (basket)")]
+    //private async Task<string> GetCartContents()
+    //{
+    //    try
+    //    {
+    //        var basketItems = await _basketState.GetBasketItemsAsync();
+    //        return JsonSerializer.Serialize(basketItems);
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        return Error(e, "Unable to get the cart's contents.");
+    //    }
+    //}
 
     private string Error(Exception e, string message)
     {

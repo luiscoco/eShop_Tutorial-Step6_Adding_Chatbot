@@ -6,7 +6,7 @@
 @inject NavigationManager Nav
 @inject CatalogService CatalogService
 @inject IProductImageUrlProvider ProductImages
-@inject BasketState BasketState
+@* @inject BasketState BasketState *@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ILoggerFactory LoggerFactory
 @inject IServiceProvider ServiceProvider
@@ -57,7 +57,7 @@
         if (client is not null)
         {
             AuthenticationState auth = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            chatState = new ChatState(CatalogService, BasketState, auth.User, ProductImages, LoggerFactory, client);
+            chatState = new ChatState(CatalogService, /* BasketState,  */auth.User, ProductImages, LoggerFactory, client);
         }
         else
         {
