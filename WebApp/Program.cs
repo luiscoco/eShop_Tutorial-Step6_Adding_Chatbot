@@ -46,11 +46,15 @@ builder.Services.AddSingleton<IChatClient>(static serviceProvider =>
     IChatClient client = new AzureOpenAIClient(endpoint, credentials).AsChatClient(deploymentName);
 
     // Build the ChatClient pipeline using ChatClientBuilder
-    IChatClient chatClient = new ChatClientBuilder(client)
-        .UseFunctionInvocation() // Adds a pipeline step for function invocation
-        .Build();
+    //IChatClient chatClient = new ChatClientBuilder(client)
+    //    .UseFunctionInvocation() // Adds a pipeline step for function invocation
+    //    .Build();
 
-    return chatClient;
+    //return chatClient;
+
+    return new ChatClientBuilder(client)
+    .UseFunctionInvocation()
+    .Build();
 });
 
 builder.AddApplicationServices();
