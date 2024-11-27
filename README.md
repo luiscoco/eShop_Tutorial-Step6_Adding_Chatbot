@@ -522,14 +522,137 @@ We can review the whole code
 }
 ```
 
+## 6. We configure the WebApp middleware
+
+In order to register the **AI ChatClient**, we have to include the following code in the **WebApp** in the **Program.cs** file:
+
+The code integrates **Azure OpenAI** services into the application and sets up a chat client **IChatClient** with custom pipeline steps to enable additional functionality like function invocation
+
+This allows the application to interact with the **Azure-hosted GPT-4** model effectively
+
+```csharp
+// Register the chat client for Azure OpenAI
+builder.Services.AddSingleton<IChatClient>(static serviceProvider =>
+{
+    var endpoint = new Uri("https://myaiserviceluiscoco.openai.azure.com/");
+    var credentials = new AzureKeyCredential("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    var deploymentName = "gpt-4o";
+
+    IChatClient client = new AzureOpenAIClient(endpoint, credentials).AsChatClient(deploymentName);
+
+    // Build the ChatClient pipeline using ChatClientBuilder
+    IChatClient chatClient = new ChatClientBuilder(client)
+        .UseFunctionInvocation() // Adds a pipeline step for function invocation
+        .Build();
+
+    return chatClient;
+});
+```
+
+This code registers a **Singleton Service of type IChatClient** in a dependency injection (DI) container in a .NET application
+
+Here's a breakdown of its functionality:
+
+**Register Singleton**: ```builder.Services.AddSingleton<IChatClient>``` registers a single instance of **IChatClient** that will be created and shared across the application's lifetime
+
+**Inline Factory**: The service is configured using a factory method ```static serviceProvider => { ... }```, which defines how the instance is created
+
+**Setup Azure OpenAI Client**:
+
+var endpoint = new Uri(...): Specifies the URI of the Azure OpenAI service endpoint
+
+var credentials = new AzureKeyCredential(...): Creates credentials using an Azure Key Credential for authentication
+
+var deploymentName = "gpt-4o";: Specifies the deployment name for the Azure OpenAI model
+
+**Create the AzureOpenAIClient**:
+
+AzureOpenAIClient(endpoint, credentials): Creates an Azure OpenAI client using the endpoint and credentials
+
+.AsChatClient(deploymentName): Configures the client to function as a chat client for the specific deployment
+
+**Pipeline Configuration**: A **ChatClientBuilder** is used to extend the functionality of the **IChatClient**
+
+.UseFunctionInvocation(): Adds a pipeline step that enables function invocation during the chat process
+
+.Build(): Finalizes the pipeline and returns the enhanced chatClient
+
+**Return the Configured Chat Client**: The fully built and configured chatClient instance is returned and registered as the singleton instance for IChatClient
+
+We review the whole **Program.cs** code (WebApp project)
+
+```csharp
+
+using WebApp.Components;
+using eShop.WebApp.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.Extensions.AI;
+using Azure;
+using Azure.AI.OpenAI;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
+
+// Add services to the container.
+builder.Services.AddRazorComponents()
+.AddInteractiveServerComponents();
+
+// Register the chat client for Azure OpenAI
+builder.Services.AddSingleton<IChatClient>(static serviceProvider =>
+{
+    var endpoint = new Uri("https://myaiserviceluiscoco.openai.azure.com/");
+    var credentials = new AzureKeyCredential("XXXXXXXXXXXXXXXXXXXX");
+    var deploymentName = "gpt-4o";
+
+    IChatClient client = new AzureOpenAIClient(endpoint, credentials).AsChatClient(deploymentName);
+
+    // Build the ChatClient pipeline using ChatClientBuilder
+    IChatClient chatClient = new ChatClientBuilder(client)
+        .UseFunctionInvocation() // Adds a pipeline step for function invocation
+        .Build();
+
+    return chatClient;
+});
+
+builder.AddApplicationServices();
 
 
-## 6. We configure the eShop.AppHost middleware
+//builder.AddAuthenticationServices();
 
+//builder.Services.AddHttpForwarderWithServiceDiscovery();
 
+//builder.Services.AddSingleton<IProductImageUrlProvider, ProductImageUrlProvider>();
+//builder.Services.AddHttpClient<CatalogService>(o => o.BaseAddress = new("http://localhost:5301"))
+//    .AddApiVersion(1.0);
 
+var app = builder.Build();
 
+app.MapDefaultEndpoints();
 
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAntiforgery();
+
+app.MapStaticAssets();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
+
+app.MapForwarder("/product-images/{id}", "http://localhost:5301", "/api/catalog/items/{id}/pic");
+
+app.Run();
+```
 ## 7. We configure the AI connection string in the appsettings.json
 
 
