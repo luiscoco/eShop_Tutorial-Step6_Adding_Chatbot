@@ -102,7 +102,7 @@ We have to load the Microsoft.Extensions.AI Nuget packages
 
 Both packages aim to streamline the development of **AI-integrated applications** using the .NET ecosystem
 
-![image](https://github.com/user-attachments/assets/cda2e1e2-c79e-4ca3-9fe3-9dac0cd2e44b)
+![image](https://github.com/user-attachments/assets/ae5b9944-e766-44f9-ae74-3de5f9c9a506)
 
 **Microsoft.Extensions.AI**:
 
@@ -135,6 +135,16 @@ Simplifies making requests to OpenAI APIs (e.g., for text generation, image crea
 Ensures compatibility with OpenAI's service models while leveraging .NET's dependency injection and configuration capabilities
 
 **Use Case**: Use this package when you need to integrate OpenAI’s capabilities into your .NET application, whether for chat, content generation, or other AI-driven functiona
+
+**Azure.AI.OpenAI**
+
+This NuGet package is Microsoft's official .NET client library for interacting with the **Azure OpenAI Service**
+
+This service allows developers to deploy, fine-tune, and generate content using OpenAI's models on Azure infrastructure
+
+The library provides a strongly-typed interface to facilitate tasks such as creating text completions, generating embeddings, and managing chat sessions
+
+It also supports authentication via Microsoft Entra ID (formerly Azure Active Directory) or API keys, ensuring secure access to Azure OpenAI resources
 
 ## 4. We modify the ChatState.cs file
 
