@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Azure.AI.OpenAI;
+using Azure;
+using Microsoft.Extensions.AI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,23 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddRazorComponents()
 .AddInteractiveServerComponents();
+
+// Register the chat client for Azure OpenAI
+builder.Services.AddSingleton<IChatClient>(static serviceProvider =>
+{
+    var endpoint = new Uri("https://myaiserviceluiscoco.openai.azure.com/");
+    var credentials = new AzureKeyCredential("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    var deploymentName = "gpt-4o";
+
+    IChatClient client = new AzureOpenAIClient(endpoint, credentials).AsChatClient(deploymentName);
+
+    // Build the ChatClient pipeline using ChatClientBuilder
+    IChatClient chatClient = new ChatClientBuilder(client)
+        .UseFunctionInvocation() // Adds a pipeline step for function invocation
+        .Build();
+
+    return chatClient;
+});
 
 builder.AddApplicationServices();
 

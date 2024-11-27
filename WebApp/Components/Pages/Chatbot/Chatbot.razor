@@ -80,7 +80,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        jsModule ??= await JS.InvokeAsync<IJSObjectReference>("import", "./Components/Chatbot/Chatbot.razor.js");
+        jsModule ??= await JS.InvokeAsync<IJSObjectReference>("import", "./Components/Pages/Chatbot/Chatbot.razor.js");
         await jsModule.InvokeVoidAsync("scrollToEnd", chat);
 
         if (firstRender)
